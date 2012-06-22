@@ -20,7 +20,5 @@ abstract class Parser {
         else
             $this->current = $this->next;
         $this->next = $this->input->nextToken();
-
-        echo 'Current: '.$this->current."\r\n";
     }
 }

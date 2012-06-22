@@ -1,8 +1,5 @@
 <?php
-
-use Majax\TagParser as TP;
-
-function autoload($className)
+function majaxtagparser_autoload($className)
 {
     $className = ltrim($className, '\\');
     $fileName  = '';
@@ -14,17 +11,8 @@ function autoload($className)
     }
     $fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className) . '.php';
 
-    require dirname(__FILE__).'/../src/'.$fileName;
+    require dirname(__FILE__).'/src/'.$fileName;
 }
 
 
-spl_autoload_register('autoload');
-$test = 'apple|big - (fruits|green + fruits^supersweet)';
-echo 'Resolving: '.$test."\r\n";
-$lexer = new TP\TagLexer($test);
-
-$p = new TP\TagParser($lexer);
-
-$result = $p->process();
-
-echo $result."\r\n";
+spl_autoload_register('majaxtagparser_autoload');

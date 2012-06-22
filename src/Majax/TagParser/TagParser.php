@@ -32,7 +32,7 @@ class TagParser extends Parser {
             $this->consume();
         }
 
-        echo $this->data."\r\n";
+        return $this->data;
     }
 
     public function processData(Token $current_token, Token $next_token = null)
