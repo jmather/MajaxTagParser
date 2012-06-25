@@ -98,11 +98,14 @@ Now you just have to pass this into the resolver like so (we will use Symfony 1.
 ### Let's show it as a cohesive example, just for good measure...
 
     $string = 'a + b';
-    $lexer = new Majax\TagParser\TagLexer($string)
-    $parser = new Majax\TagParser\TagParser($lexer);
+
+    $parser = new Majax\TagParser\TagParser();
+
     $repository = Doctrine::getTable('Tag'); // platform/framework/implementation specific
 
-    $parsed_structure = $parser->process();
+    $lexer = new Majax\TagParser\TagLexer($string); // alternately can call ->setInput() instead of constructor
+
+    $parsed_structure = $parser->process($lexer);
 
     $resolver = new \Majax\TagParser\Resolver($repository);
 
