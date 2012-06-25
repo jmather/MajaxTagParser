@@ -2,7 +2,7 @@
 
 namespace Majax\TagParser;
 
-class TagResolver
+class Resolver
 {
     private $tags;
     private $expressions;
