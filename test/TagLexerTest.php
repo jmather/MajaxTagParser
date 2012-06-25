@@ -3,7 +3,7 @@
 use \Majax\TagParser\Token;
 use \Majax\TagParser\TagLexer;
 
-class LexerTest extends PHPUnit_Framework_TestCase
+class TagLexerTest extends PHPUnit_Framework_TestCase
 {
     /** @var \Majax\TagParser\TagLexer */
     private $lexer;
