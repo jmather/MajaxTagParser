@@ -60,7 +60,7 @@ class TagLexer extends Lexer {
                     return new Token($type, "^", self::$tokenNames[$type]);
                 default:
                     if ($this->isLETTER() ) return $this->NAME();
-                    throw new \Exception("invalid character: " + $this->c);
+                    throw new \UnexpectedValueException("invalid character: " + $this->c);
             }
         }
         return new Token(self::EOF_TYPE,"<EOF>", 'EOF_TYPE');

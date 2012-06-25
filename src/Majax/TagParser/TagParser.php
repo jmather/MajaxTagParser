@@ -11,15 +11,22 @@ class TagParser extends Parser {
 
     private $ignore_next = false;
 
-    public function __construct(TagLexer $input) {
+    public function __construct(TagLexer $input = null) {
         parent::__construct($input);
+    }
+
+    public function setInput(TagLexer $input = null)
+    {
+        parent::setInput($input);
         $this->data = new Result\Group();
         $this->current_group = $this->data;
         $this->last_tag = null;
     }
 
     /** list : '[' elements ']' ; // match bracketed list */
-    public function process() {
+    public function process(TagLexer $input) {
+        $this->setInput($input);
+
         while ($this->current->type != TagLexer::EOF_TYPE)
         {
             $this->validateState($this->current, $this->next);
@@ -97,7 +104,7 @@ class TagParser extends Parser {
         if ($current_token->type == TagLexer::EOF_TYPE)
         {
             if ($next_token != null)
-                throw new \Exception(
+                throw new \UnexpectedValueException(
                     'Expecting no input after EOF : Found '.$next_token
                 );
         }
@@ -114,7 +121,7 @@ class TagParser extends Parser {
 
             if (!in_array($next_token->type, $allowed_next))
             {
-                throw new \Exception(
+                throw new \UnexpectedValueException(
                     'Expecting |, ^, -, +, or ) after '.$current_token.' : Found '.$next_token
                 );
             }
@@ -129,7 +136,7 @@ class TagParser extends Parser {
 
             if (!in_array($next_token->type, $allowed_next))
             {
-                throw new \Exception(
+                throw new \UnexpectedValueException(
                     'Expecting ( or TAG after '.$current_token.' : Found '.$next_token
                 );
             }
@@ -141,7 +148,7 @@ class TagParser extends Parser {
 
             );
             if (!in_array($next_token->type, $allowed_next))
-                throw new \Exception(
+                throw new \UnexpectedValueException(
                     'Expecting TAG after '.$current_token.' : Found '.$next_token
                 );
         }
@@ -149,7 +156,7 @@ class TagParser extends Parser {
         {
             if ($next_token->type != TagLexer::NAME)
             {
-                throw new \Exception(
+                throw new \UnexpectedValueException(
                     'Expecting TAG after '.$current_token.' : Found '.$next_token
                 );
             }
@@ -163,7 +170,7 @@ class TagParser extends Parser {
                 );
             if (!in_array($next_token->type, $allowed_next) && $next_token != null)
             {
-                throw new \Exception(
+                throw new \UnexpectedValueException(
                     'Expecting +, -, or end of line after '.$current_token.' : Found '.$next_token
                 );
             }
