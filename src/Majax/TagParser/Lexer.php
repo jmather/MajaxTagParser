@@ -10,10 +10,17 @@ abstract class Lexer {
     protected $p = 0;     // index into input of current character
     protected $c;         // current character
 
-    public function __construct($input) {
+    public function __construct($input = '') {
+        $this->setInput($input);
+    }
+
+    public function setInput($input)
+    {
         $this->input = $input;
         // prime lookahead
+        $this->p = 0;
         $this->c = substr($input, $this->p, 1);
+
     }
 
     /** Move one character; detect "end of file" */

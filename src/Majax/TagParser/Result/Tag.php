@@ -46,4 +46,9 @@ class Tag
 
         return $out;
     }
+
+    public function toString()
+    {
+        return $this->__toString();
+    }
 }

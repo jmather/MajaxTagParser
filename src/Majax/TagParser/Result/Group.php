@@ -38,4 +38,9 @@ class Group
         }
         return '['.implode(', ', $objs).']';
     }
+
+    public function toString()
+    {
+        return $this->__toString();
+    }
 }

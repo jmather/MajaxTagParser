@@ -11,7 +11,10 @@ function majaxtagparser_autoload($className)
     }
     $fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className) . '.php';
 
-    require dirname(__FILE__).'/src/'.$fileName;
+    $file = dirname(__FILE__).'/src/'.$fileName;
+
+    if (file_exists($file))
+        include_once $file;
 }
 
 

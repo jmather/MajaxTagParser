@@ -22,10 +22,6 @@ class TagLexer extends Lexer {
         return self::$tokenNames[$x];
     }
 
-    public function __construct($input) {
-        parent::__construct($input);
-    }
-
     public function isLETTER() {
         return $this->c >= 'a' &&
             $this->c <= 'z' ||
