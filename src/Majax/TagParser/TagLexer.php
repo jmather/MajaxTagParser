@@ -23,10 +23,14 @@ class TagLexer extends Lexer {
     }
 
     public function isLETTER() {
+
         return $this->c >= 'a' &&
             $this->c <= 'z' ||
             $this->c >= 'A' &&
-                $this->c <= 'Z';
+                $this->c <= 'Z' ||
+            $this->c >= '0' &&
+            $this->c <= '9' ||
+            $this->c == '_';
     }
 
     public function nextToken() {

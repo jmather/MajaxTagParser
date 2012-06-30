@@ -70,4 +70,27 @@ class TagLexerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expects, $actual);
     }
 
+    public function testAcceptsNumbersCorrectly()
+    {
+        $string = 'all - tag1';
+
+        $expects = array(
+            new Token(TagLexer::NAME, 'all', 'NAME'),
+            new Token(TagLexer::MINUS, '-', 'MINUS'),
+            new Token(TagLexer::NAME, 'tag1', 'NAME'),
+            new Token(TagLexer::EOF_TYPE, '<EOF>', 'EOF_TYPE')
+        );
+
+        $this->lexer->setInput($string);
+
+        $token = $this->lexer->nextToken();
+        $actual[] = $token;
+        while ($token->type != 1) {
+            $token = $this->lexer->nextToken();
+            $actual[] = $token;
+        }
+
+        $this->assertEquals($expects, $actual);
+    }
+
 }

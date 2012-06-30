@@ -10,10 +10,6 @@ abstract class Lexer {
     protected $p = 0;     // index into input of current character
     protected $c;         // current character
 
-    public function __construct($input = '') {
-        $this->setInput($input);
-    }
-
     public function setInput($input)
     {
         $this->input = $input;

@@ -11,11 +11,7 @@ class TagParser extends Parser {
 
     private $ignore_next = false;
 
-    public function __construct(TagLexer $input = null) {
-        parent::__construct($input);
-    }
-
-    public function setInput(TagLexer $input = null)
+    public function setInput(Lexer $input)
     {
         parent::setInput($input);
         $this->data = new Result\Group();

@@ -9,11 +9,7 @@ abstract class Parser {
     public $current; // the current lookahead token
     public $next;
 
-    public function __construct(Lexer $input = null) {
-        $this->setInput($input);
-    }
-
-    public function setInput(Lexer $input = null)
+    public function setInput(Lexer $input)
     {
         $this->input = $input;
         $this->current = null;
