@@ -64,4 +64,34 @@ class TagParserTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($expects, $output);
     }
+
+    public function testForBugFoundInVideo()
+    {
+        $d = array(
+            new Token(TagLexer::LPAREN, '(', 'LPAREN'),
+            new Token(TagLexer::NAME, 'org1', 'NAME'),
+            new Token(TagLexer::PLUS, '+', 'PLUS'),
+            new Token(TagLexer::NAME, 'org2', 'NAME'),
+            new Token(TagLexer::RPAREN, ')', 'RPAREN'),
+            new Token(TagLexer::MINUS, '-', 'MINUS'),
+            new Token(TagLexer::NAME, 'org1', 'NAME'),
+            new Token(TagLexer::EOF_TYPE, '<EOF>', 'EOF_TYPE')
+        );
+
+        $lexer = $this->getMock('Majax\TagParser\TagLexer');
+        $lexer->expects($this->any())
+            ->method('nextToken')
+            ->will($this->onConsecutiveCalls($d[0], $d[1], $d[2], $d[3], $d[4], $d[5], $d[6], $d[7]));
+
+        $output = $this->parser->process($lexer);
+
+        $expects = new Group();
+        $g = new Group($expects);
+        $g->addObject(new Tag('org1'));
+        $g->addObject(new Tag('org2'));
+        $expects->addObject($g);
+        $expects->addObject(new Tag('org1'), 'subtract');
+
+        $this->assertEquals($expects, $output);
+    }
 }

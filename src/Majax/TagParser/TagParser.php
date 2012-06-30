@@ -4,6 +4,8 @@ namespace Majax\TagParser;
 
 class TagParser extends Parser {
     private $data;
+
+    /** @var \Majax\TagParser\Result\Group */
     private $current_group;
 
     /** @var \Majax\TagParser\Result\Tag */
@@ -49,6 +51,11 @@ class TagParser extends Parser {
                 break;
             case TagLexer::RPAREN:
                 $this->current_group = $this->current_group->getParent();
+                break;
+            case TagLexer::LPAREN:
+                $g = new Result\Group($this->current_group);
+                $this->current_group->addObject($g, 'add');
+                $this->current_group = $g;
                 break;
             case TagLexer::PLUS:
                 if ($next_token->type == TagLexer::NAME)

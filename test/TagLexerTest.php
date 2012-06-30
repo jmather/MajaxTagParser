@@ -93,4 +93,31 @@ class TagLexerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expects, $actual);
     }
 
+    public function testForBugInVideoWithParens()
+    {
+        $string = '(org1 + org2) - org1';
+
+        $expects = array(
+            new Token(TagLexer::LPAREN, '(', 'LPAREN'),
+            new Token(TagLexer::NAME, 'org1', 'NAME'),
+            new Token(TagLexer::PLUS, '+', 'PLUS'),
+            new Token(TagLexer::NAME, 'org2', 'NAME'),
+            new Token(TagLexer::RPAREN, ')', 'RPAREN'),
+            new Token(TagLexer::MINUS, '-', 'MINUS'),
+            new Token(TagLexer::NAME, 'org1', 'NAME'),
+            new Token(TagLexer::EOF_TYPE, '<EOF>', 'EOF_TYPE')
+        );
+
+        $this->lexer->setInput($string);
+
+        $token = $this->lexer->nextToken();
+        $actual[] = $token;
+        while ($token->type != 1) {
+            $token = $this->lexer->nextToken();
+            $actual[] = $token;
+        }
+
+        $this->assertEquals($expects, $actual);
+    }
+
 }
